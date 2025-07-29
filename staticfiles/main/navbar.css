@@ -1,0 +1,63 @@
+/* Navbar container */
+nav {
+  background-color: #222; /* dark background */
+  padding: 10px;
+}
+
+/* Navbar list */
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Navbar items */
+nav ul li {
+  display: inline-block;
+  position: relative;
+}
+
+/* Navbar links */
+nav ul li a, nav ul li button {
+  color: white;
+  padding: 10px 15px;
+  text-decoration: none;
+  display: inline-block;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+nav ul li a:hover, nav ul li button:hover {
+  background-color: #444;
+}
+
+/* Dropdown container */
+nav ul li ul.dropdown {
+  display: none;
+  position: absolute;
+  background-color: #333;
+  min-width: 160px;
+  z-index: 1;
+  padding: 0;
+  margin: 0;
+  top: 100%;
+  left: 0;
+}
+
+/* Dropdown items */
+nav ul li ul.dropdown li {
+  display: block;
+}
+
+/* Dropdown links */
+nav ul li ul.dropdown li a {
+  display: block;
+  padding: 10px 15px;
+  color: white;
+}
+
+nav ul li ul.dropdown li a:hover {
+  background-color: #555;
+}

@@ -31,16 +31,19 @@ CSRF_TRUSTED_ORIGINS = ['https://django.gamingbaeren.de']
 # Application definition
 
 INSTALLED_APPS = [
+    'main',
+    'rust',
+    'socialmedia',
+    'imageupload',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'main',
-    'rust',
-    'socialmedia',
-    'imageupload',
+    'django_extensions',
+    
+   
 ]
 
 MIDDLEWARE = [
@@ -51,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'main.middleware.LogResolvedViewMiddleware',
 ]
 
 ROOT_URLCONF = 'website.urls'
@@ -125,7 +129,19 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'main/static'),
 ]
 
+# Add STATIC_ROOT for collectstatic
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Email settings for SMTP
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'mail.gamingbaeren.de'  # Replace with your SMTP server
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'no-reply@gamingbaeren.de'  # Replace with your email
+EMAIL_HOST_PASSWORD = '(L%`o@mHD!w`R3e?**'  # Replace with your email password
+DEFAULT_FROM_EMAIL = 'gamingbaeren.de'

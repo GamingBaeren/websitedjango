@@ -7,8 +7,8 @@
       <a href="{% url 'rust:index' %}" class="hover:text-white">Rust</a> {% endcomment %}
     </div>
 
-    <div class="relative" x-data="{ open: false }">
-      <button @click="open = !open" class="flex items-center space-x-1 hover:text-white focus:outline-none">
+    <div class="relative">
+      <button id="homeBtn" aria-expanded="false" class="flex items-center space-x-1 hover:text-white focus:outline-none">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 15c2.5 0 4.847.75 6.879 2.034M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
         </svg>
@@ -18,8 +18,8 @@
         </svg>
       </button>
 
-      <div x-show="open" @click.away="open = false" class="absolute right-0 mt-2 w-48 bg-gray-800 rounded-md shadow-lg py-1 z-50">
-        {% if user.is_authenticated %}
+      <div style="display: none;" class="absolute right-0 mt-2 w-48 bg-gray-800 rounded-md shadow-lg py-1 z-50">
+      {% if user.is_authenticated %}
           <a href="{% url 'profile' %}" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white">My Profile</a>
           <a href="{% url 'settings' %}" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white">Settings</a>
           <form method="post" action="{% url 'logout' %}">
@@ -28,7 +28,7 @@
           </form>
         {% else %}
           <a href="{% url 'login' %}" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white">Login</a>
-          <a href="{% url 'signup' %}" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white">Sign-up</a>
+          <a href="{% url 'register' %}" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white">Register</a>
         {% endif %}
       </div>
     </div>
