@@ -2,9 +2,9 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
     <p class="text-sm">&copy; 2024 GamingBaeren.de. All rights reserved.</p>
     <nav class="mt-4 md:mt-0 space-x-4 text-sm">
-      <a href="#" class="hover:text-white transition-colors">Impressum</a>
-      <a href="#" class="hover:text-white transition-colors">Datenschutz</a>
-      <a href="#" class="hover:text-white transition-colors">Kontakt</a>
+      <a href="{% url 'impressum' %}" class="hover:text-white transition-colors">Impressum</a>
+      <a href="{% url 'datenschutz' %}" class="hover:text-white transition-colors">Datenschutz</a>
+      <a href="{% url 'contact' %}" class="hover:text-white transition-colors">Kontakt</a>
     </nav>
   </div>
 </footer>

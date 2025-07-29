@@ -22,6 +22,9 @@ def test_email(request):
 def home(request):
     return render(request, 'main/home.html')
 
+def datenschutz(request):
+    return render(request, 'main/datenschutz.html')
+
 def impressum(request):
     return render(request, 'main/impressum.html')
 

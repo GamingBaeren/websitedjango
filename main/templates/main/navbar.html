@@ -17,6 +17,21 @@
         </div>
       </div>
 
+      <div class="relative group">
+        <button class="hover:text-white flex items-center space-x-1 focus:outline-none">
+          <span>Rust RP Server</span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        <div class="absolute left-0 mt-2 w-56 bg-gray-800 rounded-md shadow-lg py-1 z-50 hidden group-hover:block">
+          <a href="{% url 'rust_info' %}" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white">Info</a>
+          <a href="{% url 'rust_server_rules' %}" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white">Server Regeln</a>
+          <a href="{% url 'rust_ingame_laws' %}" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white">Ingame Gesetze</a>
+        </div>
+      </div>
+
+
       {% comment %} <a href="{% url 'imageupload:index' %}" class="hover:text-white">ImageUpload</a>
       <a href="{% url 'rust:index' %}" class="hover:text-white">Rust</a> {% endcomment %}
     </div>
@@ -36,6 +51,9 @@
       {% if user.is_authenticated %}
           <a href="{% url 'profile' %}" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white">My Profile</a>
           <a href="{% url 'settings' %}" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white">Settings</a>
+          {% if user.is_staff %}
+          <a href="{% url 'admin:index' %}" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white">Admin Site</a>
+          {% endif %}
           <form method="post" action="{% url 'logout' %}">
             {% csrf_token %}
             <button type="submit" class="w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-gray-700 hover:text-red-600">Logout</button>

@@ -14,12 +14,6 @@ from django.http import HttpResponse
 from django.utils.timezone import now
 from django.contrib.auth.decorators import user_passes_test
 
-def test_email(request):
-    try:
-        send_test_email()
-        return HttpResponse("Test email sent successfully.")
-    except Exception as e:
-        return HttpResponse(f"Failed to send test email: {e}")
 
 def home(request):
     return render(request, 'main/home.html')

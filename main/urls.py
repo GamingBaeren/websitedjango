@@ -5,6 +5,7 @@ from .forms import CustomPasswordResetForm, CustomSetPasswordForm
 
 urlpatterns = [
     path('', views.home, name='home'),
+    path('datenschutz/', views.datenschutz, name='datenschutz'),
     path('impressum/', views.impressum, name='impressum'),
     path('contact/', views.contact, name='contact'),
     path('accounts/profile/', views.profile, name='profile'),

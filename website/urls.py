@@ -26,6 +26,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('main.urls')),
     path('imageupload/', include('imageupload.urls', namespace='imageupload')),
+    path('rust-rp', include('rust.urls'))
 ]
 
 if settings.DEBUG:
