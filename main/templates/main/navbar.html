@@ -3,6 +3,20 @@
     <div class="flex items-center space-x-4">
       <a href="{% url 'home' %}" class="text-purple-400 font-bold text-lg hover:text-purple-500">GamingBaeren.de</a>
       <a href="{% url 'home' %}" class="hover:text-white">Home</a>
+
+      <div class="relative group">
+        <button class="hover:text-white flex items-center space-x-1 focus:outline-none">
+          <span>Image Upload</span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        <div class="absolute left-0 mt-2 w-48 bg-gray-800 rounded-md shadow-lg py-1 z-50 hidden group-hover:block">
+          <a href="{% url 'imageupload:how_it_works' %}" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white">How it works</a>
+          <a href="{% url 'imageupload:upload_image' %}" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white">Upload Image</a>
+        </div>
+      </div>
+
       {% comment %} <a href="{% url 'imageupload:index' %}" class="hover:text-white">ImageUpload</a>
       <a href="{% url 'rust:index' %}" class="hover:text-white">Rust</a> {% endcomment %}
     </div>
@@ -36,20 +50,30 @@
 </nav>
 
 <script>
+  // Close dropdowns when clicking outside
   document.addEventListener('click', function(event) {
-    const dropdown = document.querySelector('nav div.relative');
-    if (!dropdown.contains(event.target)) {
-      dropdown.querySelector('div[x-show]').style.display = 'none';
-    }
+    const dropdowns = document.querySelectorAll('nav div.relative');
+    dropdowns.forEach(dropdown => {
+      if (!dropdown.contains(event.target)) {
+        const menu = dropdown.querySelector('div[style]');
+        if (menu) {
+          menu.style.display = 'none';
+        }
+      }
+    });
   });
 
-  document.querySelector('nav div.relative button').addEventListener('click', function(event) {
-    event.stopPropagation();
-    const menu = this.nextElementSibling;
-    if (menu.style.display === 'block') {
-      menu.style.display = 'none';
-    } else {
-      menu.style.display = 'block';
-    }
+  // Toggle dropdown menus on button click
+  const dropdownButtons = document.querySelectorAll('nav div.relative > button');
+  dropdownButtons.forEach(button => {
+    button.addEventListener('click', function(event) {
+      event.stopPropagation();
+      const menu = this.nextElementSibling;
+      if (menu.style.display === 'block') {
+        menu.style.display = 'none';
+      } else {
+        menu.style.display = 'block';
+      }
+    });
   });
 </script>

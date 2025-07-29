@@ -1,0 +1,19 @@
+{% extends 'main/base.html' %}
+
+{% block title %}So funktioniert’s{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-4 py-12 text-gray-300">
+  <h1 class="text-3xl font-bold mb-6">📌 So funktioniert’s:</h1>
+  <ol class="list-decimal list-inside space-y-2 text-lg">
+    <li>Account erstellen</li>
+    <li>Bild hochladen</li>
+    <li>URL auswählen:
+      <ul class="list-disc list-inside ml-6">
+        <li>Direkt-URL – für direkte Anwendungen wie /sil in Rust</li>
+        <li>View-URL – zum Anschauen im Browser</li>
+      </ul>
+    </li>
+  </ol>
+</div>
+{% endblock %}

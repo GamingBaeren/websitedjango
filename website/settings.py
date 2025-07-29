@@ -145,3 +145,7 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'no-reply@gamingbaeren.de'  # Replace with your email
 EMAIL_HOST_PASSWORD = '(L%`o@mHD!w`R3e?**'  # Replace with your email password
 DEFAULT_FROM_EMAIL = 'no-reply@gamingbaeren.de'
+
+import os
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
