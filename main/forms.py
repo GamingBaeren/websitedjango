@@ -48,9 +48,17 @@ class CustomPasswordChangeForm(PasswordChangeForm):
         }),
     )
 
-from django.contrib.auth.forms import PasswordResetForm
+from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
+from django import forms
 
 class CustomPasswordResetForm(PasswordResetForm):
+    email = forms.EmailField(
+        max_length=254,
+        widget=forms.EmailInput(attrs={
+            'autocomplete': 'email',
+            'class': 'rounded-md bg-white text-black px-3 py-2 w-full'
+        })
+    )
     def send_mail(self, subject_template_name, email_template_name,
                   context, from_email, to_email, html_email_template_name=None):
         """
@@ -72,9 +80,27 @@ class CustomPasswordResetForm(PasswordResetForm):
 
         email_message.send()
 
+class CustomSetPasswordForm(SetPasswordForm):
+    new_password1 = forms.CharField(
+        label="Neues Passwort",
+        strip=False,
+        widget=forms.PasswordInput(attrs={
+            'autocomplete': 'new-password',
+            'class': 'rounded-md bg-white text-black px-3 py-2 w-full'
+        }),
+    )
+    new_password2 = forms.CharField(
+        label="Neues Passwort bestätigen",
+        strip=False,
+        widget=forms.PasswordInput(attrs={
+            'autocomplete': 'new-password',
+            'class': 'rounded-md bg-white text-black px-3 py-2 w-full'
+        }),
+    )
+
 class CustomUserCreationForm(UserCreationForm):
     password1 = forms.CharField(
-        label="Password",
+        label="Passwort",
         strip=False,
         widget=forms.PasswordInput(attrs={
             'autocomplete': 'new-password',
@@ -82,7 +108,7 @@ class CustomUserCreationForm(UserCreationForm):
         }),
     )
     password2 = forms.CharField(
-        label="Password confirmation",
+        label="Passwort wiederholen",
         widget=forms.PasswordInput(attrs={
             'autocomplete': 'new-password',
             'class': 'rounded-md bg-white text-black px-3 py-2 w-full'

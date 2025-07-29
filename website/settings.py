@@ -25,9 +25,9 @@ SECRET_KEY = 'django-insecure-=ap20%&r@(b*@wtc!c_b#shkw%8=+(hjzi)7$o32&dqah#-)q9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['django.gamingbaeren.de']
+ALLOWED_HOSTS = ['django.gamingbaeren.de', '127.0.0.1']
 
-CSRF_TRUSTED_ORIGINS = ['https://django.gamingbaeren.de']
+CSRF_TRUSTED_ORIGINS = ['https://django.gamingbaeren.de', 'http://127.0.0.1:8000']
 # Application definition
 
 INSTALLED_APPS = [
@@ -144,4 +144,4 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'no-reply@gamingbaeren.de'  # Replace with your email
 EMAIL_HOST_PASSWORD = '(L%`o@mHD!w`R3e?**'  # Replace with your email password
-DEFAULT_FROM_EMAIL = 'gamingbaeren.de'
+DEFAULT_FROM_EMAIL = 'no-reply@gamingbaeren.de'
