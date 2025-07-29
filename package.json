@@ -1,0 +1,12 @@
+{
+  "name": "django-tailwind-setup",
+  "version": "1.0.0",
+  "scripts": {
+    "build:css": "tailwindcss -i ./assets/css/input.css -o ./main/static/main/output.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.3.2",
+    "postcss": "^8.4.21",
+    "autoprefixer": "^10.4.14"
+  }
+}

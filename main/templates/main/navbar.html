@@ -1,7 +1,71 @@
-<nav>
-  <ul>
-    <li><a href="{% url 'home' %}">Home</a></li>
-    <li><a href="{% url 'about' %}">About</a></li>
-    <li><a href="{% url 'contact' %}">Contact</a></li>
-  </ul>
+<nav class="fixed top-0 left-0 right-0 z-50">
+  <div class="bg-gray-900 border-b border-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16">
+      <div class="flex items-center justify-between h-full">
+        <!-- Left section -->
+        <div class="flex items-center gap-4">
+          <button id="menuToggle" class="lg:hidden p-2 hover:bg-gray-800 rounded-lg transition-colors" aria-label="Toggle menu">
+            <svg id="menuIcon" class="h-5 w-5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+            <svg id="closeIcon" class="hidden h-5 w-5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+          <a href="{% url 'home' %}" class="flex items-center gap-2">
+            <span class="text-xl font-semibold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+              GamingBaeren.de
+            </span>
+          </a>
+        </div>
+
+        <!-- Center section -->
+        <div id="menuItems" class="hidden lg:flex items-center gap-6">
+          <a href="{% url 'home' %}" class="text-gray-300 hover:text-white transition-colors">Home</a>
+          <a href="{% url 'about' %}" class="text-gray-300 hover:text-white transition-colors">About</a>
+          <a href="{% url 'contact' %}" class="text-gray-300 hover:text-white transition-colors">Contact</a>
+        </div>
+
+        <!-- Right section -->
+        <div class="flex items-center gap-4">
+          <!-- Placeholder for auth user menu or login -->
+          <a href="{% url 'login' %}" class="text-gray-300 hover:text-white transition-colors">Login</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobileMenu" class="lg:hidden hidden bg-gray-900 border-b border-gray-800 py-4 shadow-lg">
+      <div class="px-4 space-y-4">
+        <a href="{% url 'home' %}" class="block text-gray-300 hover:text-white transition-colors py-2">Home</a>
+        <a href="{% url 'about' %}" class="block text-gray-300 hover:text-white transition-colors py-2">About</a>
+        <a href="{% url 'contact' %}" class="block text-gray-300 hover:text-white transition-colors py-2">Contact</a>
+      </div>
+    </div>
+  </div>
 </nav>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const menuToggle = document.getElementById('menuToggle');
+    const menuItems = document.getElementById('menuItems');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const menuIcon = document.getElementById('menuIcon');
+    const closeIcon = document.getElementById('closeIcon');
+
+    menuToggle.addEventListener('click', function() {
+      const isOpen = !mobileMenu.classList.contains('hidden');
+      if (isOpen) {
+        mobileMenu.classList.add('hidden');
+        menuItems.classList.add('hidden');
+        menuIcon.classList.remove('hidden');
+        closeIcon.classList.add('hidden');
+      } else {
+        mobileMenu.classList.remove('hidden');
+        menuItems.classList.remove('hidden');
+        menuIcon.classList.add('hidden');
+        closeIcon.classList.remove('hidden');
+      }
+    });
+  });
+</script>
