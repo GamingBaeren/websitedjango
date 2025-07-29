@@ -1,0 +1,15 @@
+{% extends 'main/base.html' %}
+
+{% block title %}My Profile - GamingBaeren.de{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-4 py-12">
+  <h1 class="text-3xl font-bold mb-6">Mein Profil</h1>
+  <div class="bg-gray-800 rounded-lg p-6 shadow-md text-gray-300">
+    <p><strong>Benutzername:</strong> {{ user.username }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>Vorname:</strong> {{ user.first_name }}</p>
+    <p><strong>Nachname:</strong> {{ user.last_name }}</p>
+  </div>
+</div>
+{% endblock %}

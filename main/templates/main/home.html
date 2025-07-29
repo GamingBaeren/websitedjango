@@ -1,8 +1,35 @@
 {% extends 'main/base.html' %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Home - GamingBaeren.de{% endblock %}
 
 {% block content %}
-<h1>Welcome to the Home Page</h1>
-<p>This is the home page content.</p>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <section class="text-center mb-16">
+    <h1 class="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">
+      Willkommen bei GamingBaeren.de
+    </h1>
+    <p class="mt-6 text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto px-2 sm:px-0">
+      Dein Discord-Server für Rust-RP und mehr. Wir bieten auch zuverlässige Hosting-Services für deine Spiele und Projekte.
+    </p>
+  </section>
+
+  <section class="mb-12">
+    <h2 class="text-2xl sm:text-3xl font-semibold mb-6 text-gray-200 px-2 sm:px-0">Unsere Game-Server</h2>
+    <div class="flex flex-col space-y-8 px-2 sm:px-0">
+      <div class="bg-gray-800 rounded-lg p-6 sm:p-8 shadow-lg">
+        <h3 class="text-xl sm:text-2xl font-bold mb-3">Rust-RP</h3>
+        <p class="text-gray-400 text-base sm:text-lg">
+          Erlebe spannendes Rollenspiel auf unserem Rust-RP Server mit aktiver Community und regelmäßigen Events.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="px-2 sm:px-0">
+    <h2 class="text-2xl sm:text-3xl font-semibold mb-6 text-gray-200">Hosting Services</h2>
+    <p class="text-gray-400 max-w-3xl text-base sm:text-lg">
+      Wir bieten professionelles Hosting für deine Game-Server, Websites und Anwendungen mit hoher Verfügbarkeit und Support.
+    </p>
+  </section>
+</div>
 {% endblock %}
