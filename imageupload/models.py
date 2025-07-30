@@ -7,8 +7,7 @@ def unique_file_path(instance, filename):
     ext = filename.split('.')[-1]
     # generate unique filename with uuid4
     unique_filename = f"{uuid.uuid4().hex}.{ext}"
-    from django.conf import settings
-    return os.path.join(settings.MEDIA_ROOT, 'uploaded_images', unique_filename)
+    return os.path.join('uploaded_images', unique_filename)
 
 class Image(models.Model):
     image = models.ImageField(upload_to=unique_file_path)
@@ -30,3 +29,7 @@ class Image(models.Model):
             return None
         from django.utils.timezone import timedelta
         return self.uploaded_at + timedelta(days=self.retention_days)
+
+    def get_absolute_url(self):
+        from django.urls import reverse
+        return reverse('imageupload:image_detail', args=[self.id])

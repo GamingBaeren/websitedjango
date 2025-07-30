@@ -25,9 +25,9 @@ SECRET_KEY = 'django-insecure-=ap20%&r@(b*@wtc!c_b#shkw%8=+(hjzi)7$o32&dqah#-)q9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['django.gamingbaeren.de', '127.0.0.1']
+ALLOWED_HOSTS = ['django.gamingbaeren.de', '127.0.0.1', "gamingbaeren.de"]
 
-CSRF_TRUSTED_ORIGINS = ['https://django.gamingbaeren.de', 'http://127.0.0.1:8000']
+CSRF_TRUSTED_ORIGINS = ['https://django.gamingbaeren.de', 'http://127.0.0.1:8000', 'https://gamingbaeren.de']
 # Application definition
 
 INSTALLED_APPS = [

@@ -13,6 +13,7 @@ from django.http import HttpResponse
 # Removed import of send_test_email as utils.py does not exist
 from django.utils.timezone import now
 from django.contrib.auth.decorators import user_passes_test
+from .models import Image
 
 
 def home(request):
