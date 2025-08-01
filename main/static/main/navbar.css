@@ -1,6 +1,6 @@
 /* Navbar container */
 nav {
-  background-color: #222; /* dark background */
+  background-color: var(--navbar-bg); /* dynamic background */
   padding: 10px;
 }
 
@@ -19,7 +19,7 @@ nav ul li {
 
 /* Navbar links */
 nav ul li a, nav ul li button {
-  color: white;
+  color: var(--light-navbar-text);
   padding: 10px 15px;
   text-decoration: none;
   display: inline-block;
@@ -37,7 +37,7 @@ nav ul li a:hover, nav ul li button:hover {
 nav ul li ul.dropdown {
   display: none;
   position: absolute;
-  background-color: #333;
+  background-color: var(--dropdown-bg) !important;
   min-width: 160px;
   z-index: 1;
   padding: 0;
@@ -55,7 +55,7 @@ nav ul li ul.dropdown li {
 nav ul li ul.dropdown li a {
   display: block;
   padding: 10px 15px;
-  color: white;
+  color: var(--light-navbar-text) !important;
 }
 
 nav ul li ul.dropdown li a:hover {

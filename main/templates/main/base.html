@@ -22,6 +22,10 @@
         --light-footer-text: {{ light_footer_text }};
         --dark-footer-bg: {{ dark_footer_bg }};
         --dark-footer-text: {{ dark_footer_text }};
+        --light-navbar-bg-var: {{ light_navbar_bg }};
+        --dark-navbar-bg-var: {{ dark_navbar_bg }};
+        --light-dropdown-bg-var: {{ light_navbar_bg }};
+        --dark-dropdown-bg-var: {{ dark_navbar_bg }};
       }
       html.light {
         background-color: var(--light-bg);
@@ -32,6 +36,8 @@
         --imageupload-text: {{ light_imageupload_text }};
         --socialmedia-bg: {{ light_socialmedia_bg }};
         --socialmedia-text: {{ light_socialmedia_text }};
+        --navbar-bg: var(--light-navbar-bg-var);
+        --dropdown-bg: var(--light-dropdown-bg-var);
       }
       html.dark {
         background-color: var(--dark-bg);
@@ -42,6 +48,8 @@
         --imageupload-text: {{ dark_imageupload_text }};
         --socialmedia-bg: {{ dark_socialmedia_bg }};
         --socialmedia-text: {{ dark_socialmedia_text }};
+        --navbar-bg: var(--dark-navbar-bg-var);
+        --dropdown-bg: var(--dark-dropdown-bg-var);
       }
     </style>
 </head>
