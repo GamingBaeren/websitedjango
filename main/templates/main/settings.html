@@ -5,7 +5,7 @@
 {% block content %}
 <div class="max-w-3xl mx-auto px-4 py-12">
   <h1 class="text-3xl font-bold mb-6">Einstellungen</h1>
-  <form method="post" class="bg-gray-800 rounded-lg p-6 shadow-md text-gray-300 space-y-4">
+  <form method="post" class="rounded-lg p-6 shadow-md text-gray-300 space-y-4" style="background-color: {% if dark_mode_enabled %}{{ dark_bg }}{% else %}{{ light_bg }}{% endif %};">
     {% csrf_token %}
     <div class="space-y-4">
       {% for field in form %}
