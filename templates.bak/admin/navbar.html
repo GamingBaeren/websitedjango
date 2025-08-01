@@ -1,0 +1,61 @@
+<nav class="fixed top-0 left-0 right-0 bg-gray-900 border-b border-gray-800 text-gray-300 z-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+    <div class="flex items-center space-x-4">
+      <a href="{% url 'admin:index' %}" class="text-purple-400 font-bold text-lg hover:text-purple-500">Admin Dashboard</a>
+      <a href="{% url 'admin:index' %}" class="hover:text-white">Dashboard</a>
+      <a href="{% url 'admin:auth_user_changelist' %}" class="hover:text-white">Users</a>
+      <a href="{% url 'admin:auth_group_changelist' %}" class="hover:text-white">Groups</a>
+      <a href="{% url 'admin:app_list' app_label='imageupload' %}" class="hover:text-white">Image Upload</a>
+      <a href="{% url 'admin:app_list' app_label='rust' %}" class="hover:text-white">Rust RP Server</a>
+    </div>
+
+    <div class="relative">
+      <button id="adminUserBtn" aria-expanded="false" class="flex items-center space-x-1 hover:text-white focus:outline-none">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 15c2.5 0 4.847.75 6.879 2.034M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+        <span>{{ user.username }}</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+
+      <div style="display: none;" class="absolute right-0 mt-2 w-48 bg-gray-800 rounded-md shadow-lg py-1 z-50">
+        <a href="{% url 'admin:password_change' %}" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white">Change Password</a>
+        <form method="post" action="{% url 'logout' %}">
+          {% csrf_token %}
+          <button type="submit" class="w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-gray-700 hover:text-red-600">Logout</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<script>
+  // Close dropdowns when clicking outside
+  document.addEventListener('click', function(event) {
+    const dropdowns = document.querySelectorAll('nav div.relative');
+    dropdowns.forEach(dropdown => {
+      if (!dropdown.contains(event.target)) {
+        const menu = dropdown.querySelector('div[style]');
+        if (menu) {
+          menu.style.display = 'none';
+        }
+      }
+    });
+  });
+
+  // Toggle dropdown menus on button click
+  const dropdownButtons = document.querySelectorAll('nav div.relative > button');
+  dropdownButtons.forEach(button => {
+    button.addEventListener('click', function(event) {
+      event.stopPropagation();
+      const menu = this.nextElementSibling;
+      if (menu.style.display === 'block') {
+        menu.style.display = 'none';
+      } else {
+        menu.style.display = 'block';
+      }
+    });
+  });
+</script>

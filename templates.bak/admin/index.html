@@ -1,0 +1,48 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block content %}
+<h1>{% trans 'Site administration' %}</h1>
+
+{% if app_list %}
+  <div class="app-list">
+    {% for app in app_list %}
+      <div class="app">
+        <h2 class="bg-blue-700 text-white px-2 py-1 rounded-t-md">{{ app.name }}</h2>
+        <table class="min-w-full border border-gray-700 border-collapse">
+          <thead>
+            <tr>
+              <th class="border border-gray-700 px-4 py-2 text-left">{% trans 'Model name' %}</th>
+              <th class="border border-gray-700 px-4 py-2 text-left">{% trans 'Add link' %}</th>
+              <th class="border border-gray-700 px-4 py-2 text-left">{% trans 'Change or view list link' %}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for model in app.models %}
+              <tr>
+                <th class="border border-gray-700 px-4 py-2 font-normal">{{ model.name }}</th>
+                <td class="border border-gray-700 px-4 py-2">
+                  {% if model.add_url %}
+                    <a href="{{ model.add_url }}" class="text-purple-400 hover:text-purple-500">{% trans 'Add' %}</a>
+                  {% else %}
+                    &nbsp;
+                  {% endif %}
+                </td>
+                <td class="border border-gray-700 px-4 py-2">
+                  {% if model.admin_url %}
+                    <a href="{{ model.admin_url }}" class="text-purple-400 hover:text-purple-500">{% trans 'Change' %}</a>
+                  {% else %}
+                    &nbsp;
+                  {% endif %}
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <p>{% trans "You don't have permission to edit anything." %}</p>
+{% endif %}
+{% endblock %}

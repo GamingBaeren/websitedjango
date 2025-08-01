@@ -1,0 +1,19 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+  <div class="max-w-4xl mx-auto py-8 px-4 sm:px-8 text-center">
+    <h1 class="text-3xl font-bold mb-6 text-white">Social Media Links</h1>
+    <div class="flex flex-col space-y-4 items-center justify-center">
+      {% for link in links %}
+        <a href="{{ link.url }}" target="_blank" class="inline-flex items-center justify-center p-4 w-64 bg-gray-800 rounded-lg shadow text-white hover:bg-blue-600 transition">
+          {% if link.icon_class %}
+            <i class="{{ link.icon_class }} mr-2"></i>
+          {% endif %}
+          <span class="text-lg font-semibold">{{ link.name }}</span>
+        </a>
+      {% empty %}
+        <p class="text-white">No social media links found.</p>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}

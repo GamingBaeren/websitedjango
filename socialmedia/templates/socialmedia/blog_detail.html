@@ -1,0 +1,16 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+  <div class="max-w-4xl mx-auto py-8">
+    <article class="bg-gray-800 rounded-lg shadow p-6 text-white">
+      <h1 class="text-3xl font-bold mb-4">{{ post.title }}</h1>
+      <p class="text-gray-400 mb-6">{{ post.published_date|date:"F j, Y" }}</p>
+      {% if post.image %}
+        <img src="{{ post.image.url }}" alt="{{ post.title }}" class="mb-6 rounded">
+      {% endif %}
+      <div class="prose max-w-none">
+        {{ post.content|linebreaks }}
+      </div>
+    </article>
+  </div>
+{% endblock %}

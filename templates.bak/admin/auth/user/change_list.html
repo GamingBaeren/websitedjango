@@ -1,0 +1,262 @@
+{% extends "admin/change_list.html" %}
+{% load static %}
+
+{% block extrahead %}
+  <style>
+    /* Tailwind dark theme base */
+    body, .module, .change-list {
+      background-color: #1f2937 !important; /* gray-800 */
+      color: #e5e7eb !important; /* gray-200 */
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    }
+    /* Container layout */
+    .change-list {
+      display: flex;
+      gap: 1.5rem;
+    }
+    /* Left content area */
+    .change-list > .content-main {
+      flex: 1 1 auto;
+      background-color: #1f2937;
+      padding: 1rem;
+      border-radius: 0.375rem;
+      overflow-x: auto;
+    }
+    /* Filters sidebar */
+    #changelist-filter {
+      width: 280px;
+      background-color: #374151; /* gray-700 */
+      padding: 1rem;
+      border-radius: 0.375rem;
+      color: #d1d5db; /* gray-300 */
+      position: sticky;
+      top: 1rem;
+      height: fit-content;
+    }
+    #changelist-filter h2 {
+      background-color: #2563eb; /* blue-600 */
+      color: white;
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.25rem;
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+      font-size: 0.875rem;
+    }
+    #changelist-filter a {
+      color: #60a5fa;
+      text-decoration: none;
+    }
+    #changelist-filter a:hover {
+      color: #3b82f6;
+    }
+    /* Collapsible filter groups */
+    .filter-group-header {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      color: #60a5fa;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+      user-select: none;
+    }
+    .filter-group-header svg {
+      margin-right: 0.25rem;
+      transition: transform 0.2s ease;
+    }
+    .filter-group-content {
+      margin-left: 1rem;
+      margin-bottom: 1rem;
+    }
+    .filter-group-content.collapsed {
+      display: none;
+    }
+    /* Add User button */
+    .object-tools a.addlink {
+      background-color: #2563eb;
+      color: white;
+      padding: 0.375rem 0.75rem;
+      border-radius: 9999px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      text-decoration: none;
+      box-shadow: 0 1px 2px rgb(0 0 0 / 0.05);
+    }
+    .object-tools a.addlink:hover {
+      background-color: #1d4ed8;
+    }
+    .object-tools a.addlink svg {
+      width: 1rem;
+      height: 1rem;
+    }
+    /* Search and action bar container */
+    .search-action-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    /* Search form */
+    #changelist-search {
+      flex-grow: 1;
+      display: flex;
+      gap: 0.5rem;
+    }
+    #changelist-search input[type="text"] {
+      flex-grow: 1;
+      border-radius: 0.375rem;
+      padding: 0.25rem 0.5rem;
+      border: 1px solid #374151;
+      background-color: #1f2937;
+      color: #e5e7eb;
+    }
+    #changelist-search input[type="submit"] {
+      background-color: #2563eb;
+      color: white;
+      border-radius: 0.375rem;
+      padding: 0.25rem 0.75rem;
+      border: none;
+      cursor: pointer;
+    }
+    #changelist-search input[type="submit"]:hover {
+      background-color: #1d4ed8;
+    }
+    /* Action form */
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .actions select {
+      border-radius: 0.375rem;
+      padding: 0.25rem 0.5rem;
+      border: 1px solid #374151;
+      background-color: #1f2937;
+      color: #e5e7eb;
+    }
+    .actions input[type="submit"] {
+      background-color: #2563eb;
+      color: white;
+      border-radius: 0.375rem;
+      padding: 0.25rem 0.75rem;
+      border: none;
+      cursor: pointer;
+    }
+    .actions input[type="submit"]:hover {
+      background-color: #1d4ed8;
+    }
+    /* Table styling */
+    table#result_list {
+      border-collapse: collapse;
+      width: 100%;
+      border: 1px solid #374151;
+      background-color: #1f2937;
+      color: #e5e7eb;
+    }
+    table#result_list th, table#result_list td {
+      border: 1px solid #374151;
+      padding: 0.5rem 1rem;
+      vertical-align: middle;
+    }
+    table#result_list thead th {
+      background-color: #111827;
+      color: #d1d5db;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    table#result_list tbody tr:nth-child(odd) {
+      background-color: #374151;
+    }
+    table#result_list tbody tr:nth-child(even) {
+      background-color: #1f2937;
+    }
+    a {
+      color: #60a5fa;
+      text-decoration: none;
+    }
+    a:hover {
+      color: #3b82f6;
+    }
+    /* Staff status icons */
+    .field-is_staff::before {
+      content: "✔";
+      color: #22c55e;
+      font-weight: bold;
+      margin-right: 0.25rem;
+    }
+    .field-is_staff.false::before {
+      content: "✘";
+      color: #ef4444;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+  <div class="change-list">
+    <div class="content-main">
+      {% block object-tools %}
+        <div class="object-tools mb-4 flex justify-end">
+          <a href="{% url 'admin:auth_user_add' %}" class="addlink" title="Add user">
+            Add user
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true" class="inline-block ml-1 w-4 h-4">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+            </svg>
+          </a>
+        </div>
+      {% endblock %}
+
+      <div class="search-action-bar">
+        {% block search %}
+          <form id="changelist-search" method="get" action="">
+            <input type="text" name="q" value="{{ cl.query }}" placeholder="Search" aria-label="Search users">
+            <input type="submit" value="Search">
+          </form>
+        {% endblock %}
+
+        {% block actions %}
+          <form class="actions" method="post" action="">
+            {% csrf_token %}
+            <label for="action-select" class="sr-only">Action:</label>
+            <select name="action" id="action-select">
+              <option value="" selected>---------</option>
+              {% for action in cl.actions %}
+                <option value="{{ action.0 }}">{{ action.1 }}</option>
+              {% endfor %}
+            </select>
+            <input type="submit" value="Go">
+            <span>0 of {{ cl.result_count }} selected</span>
+          </form>
+        {% endblock %}
+      </div>
+
+      {% block result_list %}
+        {{ block.super }}
+      {% endblock %}
+    </div>
+
+    <div id="changelist-filter">
+      <h2>FILTER</h2>
+      {% for spec in cl.filter_specs %}
+        <div class="filter-group">
+          <div class="filter-group-header" onclick="this.nextElementSibling.classList.toggle('collapsed')">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+            <span>{{ spec.title }}</span>
+          </div>
+          <div class="filter-group-content">
+            {% for choice in spec.choices %}
+              <a href="{{ choice.query_string }}" class="{% if choice.selected %}text-blue-600 font-semibold{% else %}text-blue-400 hover:text-blue-500{% endif %} block">
+                {{ choice.display }}{% if choice.count %} ({{ choice.count }}){% endif %}
+              </a>
+            {% endfor %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}

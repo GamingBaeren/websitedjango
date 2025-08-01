@@ -1,0 +1,4 @@
+/* CSS to force pure black background for dark mode */
+html.dark body {
+  background-color: #000000 !important;
+}

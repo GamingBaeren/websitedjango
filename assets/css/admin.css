@@ -2,4 +2,87 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom admin styles can be added here */
+/* Custom admin navbar styles */
+#header {
+  @apply bg-gray-800 border-b border-gray-700;
+}
+
+#site-name a {
+  @apply text-purple-400 font-bold hover:text-purple-500;
+}
+
+#user-tools {
+  @apply bg-gray-800 text-gray-300;
+}
+
+#user-tools a {
+  @apply hover:text-white;
+}
+
+/* Override link colors */
+a {
+  @apply text-purple-400 hover:text-purple-500;
+}
+
+/* Buttons */
+input[type="submit"], button {
+  @apply bg-purple-600 hover:bg-purple-700 text-white font-semibold py-1 px-3 rounded-md transition duration-150;
+}
+
+/* Dark mode styles */
+html.dark {
+  background-color: #1f2937; /* gray-800 */
+  color: #e5e7eb; /* gray-200 */
+}
+
+html {
+  background-color: #f5f0e9; /* light mode background from image */
+  color: #000000; /* light mode text */
+}
+
+/* Ensure body and main containers inherit colors */
+body, .content, main {
+  background-color: inherit;
+  color: inherit;
+}
+
+/* Dark mode variants for common elements */
+.dark a {
+  color: #60a5fa; /* blue-400 */
+}
+
+.dark a:hover {
+  color: #3b82f6; /* blue-500 */
+}
+
+.dark table#result_list {
+  background-color: #1f2937 !important; /* gray-800 */
+  color: #e5e7eb !important; /* gray-200 */
+}
+
+.dark table#result_list thead th {
+  background-color: #111827 !important; /* gray-900 */
+  color: #d1d5db !important; /* gray-300 */
+}
+
+.dark table#result_list tbody tr:nth-child(odd) {
+  background-color: #374151 !important; /* gray-700 */
+}
+
+.dark table#result_list tbody tr:nth-child(even) {
+  background-color: #1f2937 !important; /* gray-800 */
+}
+
+/* Light mode overrides */
+html:not(.dark) {
+  background-color: #f5f0e9;
+  color: #000000;
+}
+
+html:not(.dark) a {
+  color: #1f2937;
+}
+
+html:not(.dark) a:hover {
+  color: #374151;
+}

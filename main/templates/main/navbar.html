@@ -1,4 +1,4 @@
-<nav class="fixed top-0 left-0 right-0 bg-gray-900 border-b border-gray-800 text-gray-300 z-50">
+<nav class="fixed top-0 left-0 right-0 z-50" style="background-color: {% if dark_mode_enabled %}{{ dark_navbar_bg }}{% else %}{{ light_navbar_bg }}{% endif %}; color: {% if dark_mode_enabled %}{{ dark_navbar_text }}{% else %}{{ light_navbar_text }}{% endif %}; border-bottom: 1px solid {% if dark_mode_enabled %}{{ dark_navbar_text }}{% else %}{{ light_navbar_text }}{% endif %};">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
     <div class="flex items-center space-x-4">
       <a href="{% url 'home' %}" class="text-purple-400 font-bold text-lg hover:text-purple-500">GamingBaeren.de</a>
@@ -31,6 +31,18 @@
         </div>
       </div>
 
+      <div class="relative group">
+        <button class="hover:text-white flex items-center space-x-1 focus:outline-none">
+          <span>Social Media</span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        <div class="absolute left-0 mt-2 w-48 bg-gray-800 rounded-md shadow-lg py-1 z-50 hidden group-hover:block">
+          <a href="{% url 'socialmedia:socialmedia_main' %}" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white">Social Media Links</a>
+          <a href="{% url 'socialmedia:blog_list' %}" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white">Blog</a>
+        </div>
+      </div>
 
       {% comment %} <a href="{% url 'imageupload:index' %}" class="hover:text-white">ImageUpload</a>
       <a href="{% url 'rust:index' %}" class="hover:text-white">Rust</a> {% endcomment %}
@@ -64,7 +76,6 @@
         {% endif %}
       </div>
     </div>
-  </div>
 </nav>
 
 <script>
@@ -94,4 +105,5 @@
       }
     });
   });
+
 </script>

@@ -1,10 +1,83 @@
-<footer class="bg-gray-900 border-t border-gray-800 text-gray-400 py-6 mt-12">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
+<footer id="site-footer" style="background-color: {% if dark_mode_enabled %}{{ dark_footer_bg }}{% else %}{{ light_footer_bg }}{% endif %}; color: {% if dark_mode_enabled %}{{ dark_footer_text }}{% else %}{{ light_footer_text }}{% endif %}; border-top: 1px solid {% if dark_mode_enabled %}{{ dark_footer_text }}{% else %}{{ light_footer_text }}{% endif %};">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center h-full">
     <p class="text-sm">&copy; 2024 GamingBaeren.de. All rights reserved.</p>
     <nav class="mt-4 md:mt-0 space-x-4 text-sm">
       <a href="{% url 'impressum' %}" class="hover:text-white transition-colors">Impressum</a>
-      <a href="{% url 'datenschutz' %}" class="hover:text-white transition-colors">Datenschutz</a>
+      <a href="{
       <a href="{% url 'contact' %}" class="hover:text-white transition-colors">Kontakt</a>
     </nav>
+    <button id="darkModeToggle" aria-label="Toggle Dark Mode" class="ml-4 mt-4 md:mt-0 text-gray-300 hover:text-white focus:outline-none flex items-center space-x-2 px-3 py-1 border border-gray-600 rounded">
+      <svg id="darkModeIcon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" role="img" focusable="false">
+        <path id="darkModeIconPath" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m8.485-8.485l-.707.707M4.222 4.222l-.707.707m16.97 8.485h-1M3 12H2m16.485 4.95l-.707-.707M4.222 19.778l-.707-.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+      </svg>
+      <span class="text-sm select-none">Toggle Dark Mode</span>
+    </button>
   </div>
 </footer>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const htmlElement = document.documentElement;
+
+    if (!darkModeToggle) {
+      console.error('Dark mode toggle button not found');
+      return;
+    }
+
+    function setDarkMode(enabled) {
+      console.log('Setting dark mode:', enabled);
+      if (enabled) {
+        if (!htmlElement.classList.contains('dark')) {
+          htmlElement.classList.add('dark');
+        }
+      } else {
+        if (htmlElement.classList.contains('dark')) {
+          htmlElement.classList.remove('dark');
+        }
+      }
+    }
+
+    // Initialize dark mode based on cookie
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          // Does this cookie string begin with the name we want?
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+
+    const darkModePref = getCookie('dark_mode');
+    console.log('Dark mode preference from cookie:', darkModePref);
+    if (darkModePref === 'true') {
+      setDarkMode(true);
+    } else if (darkModePref === 'false') {
+      setDarkMode(false);
+    } else {
+      // Default to light mode
+      setDarkMode(false);
+    }
+
+    darkModeToggle.addEventListener('click', () => {
+      const isDark = htmlElement.classList.contains('dark');
+      console.log('Dark mode toggle clicked. Current mode:', isDark);
+      const newMode = !isDark;
+      setDarkMode(newMode);
+      // Set cookie to expire in 30 days
+      const d = new Date();
+      d.setTime(d.getTime() + (30*24*60*60*1000));
+      const expires = "expires="+ d.toUTCString();
+      document.cookie = "dark_mode=" + newMode + ";" + expires + ";path=/;Secure;SameSite=Lax";
+      // Reload page to apply server-side changes
+      location.reload();
+    });
+  });
+</script>

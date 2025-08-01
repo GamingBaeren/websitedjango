@@ -1,0 +1,205 @@
+{% extends "admin/change_list.html" %}
+
+
+{% block extrahead %}
+  <style>
+    /* Table styling */
+    table#result_list {
+      min-width: 100%;
+      border-collapse: collapse;
+      border: 1px solid #374151; /* gray-700 */
+      background-color: #1f2937 !important; /* gray-800 */
+      color: #e5e7eb !important; /* gray-200 */
+    }
+    table#result_list th, table#result_list td {
+      border: 1px solid #374151 !important; /* gray-700 */
+      padding: 0.5rem 1rem;
+    }
+    /* Alternate row colors */
+    table#result_list tbody tr:nth-child(odd) {
+      background-color: #374151 !important; /* gray-700 */
+    }
+    table#result_list tbody tr:nth-child(even) {
+      background-color: #1f2937 !important; /* gray-800 */
+    }
+    /* Header styling */
+    table#result_list thead th {
+      background-color: #111827 !important; /* gray-900 */
+      color: #d1d5db !important; /* gray-300 */
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    /* Links */
+    table#result_list a {
+      color: #60a5fa !important; /* blue-400 */
+      text-decoration: none;
+    }
+    table#result_list a:hover {
+      color: #3b82f6 !important; /* blue-500 */
+    }
+    /* Search box */
+    #changelist-search input[type="text"] {
+      border-radius: 0.375rem !important; /* rounded-md */
+      color: black !important;
+      padding: 0.25rem 0.5rem !important;
+    }
+    #changelist-search input[type="submit"] {
+      background-color: #3b82f6 !important; /* blue-500 */
+      color: white !important;
+      border-radius: 0.375rem !important; /* rounded-md */
+      padding: 0.25rem 0.75rem !important;
+      cursor: pointer !important;
+      border: none !important;
+    }
+    #changelist-search input[type="submit"]:hover {
+      background-color: #2563eb !important; /* blue-600 */
+    }
+    /* Sidebar filter */
+    #changelist-filter {
+      background-color: #374151 !important; /* gray-700 */
+      padding: 1rem !important;
+      border-radius: 0.375rem !important; /* rounded-md */
+      color: #d1d5db !important; /* gray-300 */
+    }
+    #changelist-filter h2 {
+      background-color: #2563eb !important; /* blue-600 */
+      color: white !important;
+      padding: 0.25rem 0.5rem !important;
+      border-radius: 0.25rem !important;
+      margin-bottom: 0.5rem !important;
+    }
+    #changelist-filter a {
+      color: #60a5fa !important; /* blue-400 */
+      text-decoration: none !important;
+    }
+    #changelist-filter a:hover {
+      color: #3b82f6 !important; /* blue-500 */
+    }
+    /* Staff status icons */
+    .field-staff_status .icon-yes::before {
+      content: "✔";
+      color: #22c55e !important; /* green-500 */
+      font-weight: bold !important;
+    }
+    .field-staff_status .icon-no::before {
+      content: "✘";
+      color: #ef4444 !important; /* red-500 */
+      font-weight: bold !important;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+  <div class="flex space-x-4" style="color:#e5e7eb;">
+    <div class="flex-1 overflow-x-auto bg-gray-800 p-4 rounded-md">
+      <table id="result_list" class="table-auto w-full text-left">
+        <thead>
+          <tr>
+            <th scope="col" class="px-4 py-2"><input type="checkbox" id="action-toggle"></th>
+            <th scope="col" class="px-4 py-2">Username</th>
+            <th scope="col" class="px-4 py-2">Email address</th>
+            <th scope="col" class="px-4 py-2">First name</th>
+            <th scope="col" class="px-4 py-2">Last name</th>
+            <th scope="col" class="px-4 py-2">Staff status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in cl.result_list %}
+          <tr class="{% cycle 'bg-gray-700' 'bg-gray-800' %}">
+            <td class="border px-4 py-2 text-center">
+              <input type="checkbox" name="_selected_action" value="{{ user.pk }}" class="action-select">
+            </td>
+            <td class="border px-4 py-2">
+              <a href="{{ user.get_admin_url }}">{{ user.username }}</a>
+            </td>
+            <td class="border px-4 py-2">{{ user.email|default:"-" }}</td>
+            <td class="border px-4 py-2">{{ user.first_name|default:"-" }}</td>
+            <td class="border px-4 py-2">{{ user.last_name|default:"-" }}</td>
+            <td class="border px-4 py-2 text-center field-staff_status">
+              {% if user.is_staff %}
+                <svg class="inline-block w-5 h-5 text-green-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                </svg>
+              {% else %}
+                <svg class="inline-block w-5 h-5 text-red-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+              {% endif %}
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="6" class="px-4 py-2 text-center">No users found.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div id="changelist-filter" class="w-64 bg-gray-700 p-4 rounded-md text-gray-300">
+      {% block filters %}
+        <div class="mb-4">
+          <h2 class="bg-blue-700 text-white px-3 py-1 rounded-sm font-semibold text-sm">FILTER</h2>
+        </div>
+        {% for spec in cl.filter_specs %}
+          {% include "admin/filter.html" with spec=spec %}
+        {% endfor %}
+      {% endblock %}
+    </div>
+  </div>
+{% endblock %}
+
+{% block object-tools %}
+  <div class="object-tools flex justify-end mb-4">
+    <a href="{% url 'admin:auth_user_add' %}" class="inline-flex items-center px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+      Add User
+      <svg class="ml-2 -mr-0.5 h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+      </svg>
+    </a>
+  </div>
+{% endblock %}
+
+{% block extrajs %}
+  {{ block.super }}
+{% endblock %}
+
+{% block result_list %}
+  <table id="result_list" class="table-auto w-full text-left">
+    <thead>
+      <tr>
+        <th scope="col" class="px-4 py-2"><input type="checkbox" id="action-toggle"></th>
+        <th scope="col" class="px-4 py-2">Username</th>
+        <th scope="col" class="px-4 py-2">Email address</th>
+        <th scope="col" class="px-4 py-2">First name</th>
+        <th scope="col" class="px-4 py-2">Last name</th>
+        <th scope="col" class="px-4 py-2">Staff status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in cl.result_list %}
+      <tr class="{% cycle 'bg-gray-700' 'bg-gray-800' %}">
+        <td class="border px-4 py-2 text-center">
+          <input type="checkbox" name="_selected_action" value="{{ user.pk }}" class="action-select">
+        </td>
+        <td class="border px-4 py-2">
+          <a href="{{ user.get_admin_url }}">{{ user.username }}</a>
+        </td>
+        <td class="border px-4 py-2">{{ user.email|default:"-" }}</td>
+        <td class="border px-4 py-2">{{ user.first_name|default:"-" }}</td>
+        <td class="border px-4 py-2">{{ user.last_name|default:"-" }}</td>
+        <td class="border px-4 py-2 text-center field-staff_status">
+          {% if user.is_staff %}
+            <span class="icon-yes"></span>
+          {% else %}
+            <span class="icon-no"></span>
+          {% endif %}
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="6" class="px-4 py-2 text-center">No users found.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

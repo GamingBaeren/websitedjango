@@ -1,15 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" {% if dark_mode_enabled %}class="dark"{% else %}class="light"{% endif %}>
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}My Website{% endblock %}</title>
     {% load static %}
     <link href="{% static 'main/output.css' %}" rel="stylesheet">
+    <link href="{% static 'main/footer-sticky.css' %}" rel="stylesheet">
+    <link href="{% static 'main/dark-bg-fix.css' %}" rel="stylesheet">
+    <link href="{% static 'main/custom-text-colors.css' %}" rel="stylesheet">
 </head>
-<body class="bg-gray-900 text-gray-300">
+<body class="{% if dark_mode_enabled %}dark{% else %}light{% endif %}" style="background-color: {% if dark_mode_enabled %}{{ dark_bg }}{% else %}{{ light_bg }}{% endif %}; color: {% if dark_mode_enabled %}{{ dark_text }}{% else %}{{ light_text }}{% endif %};">
+    <!-- Dark mode enabled: {{ dark_mode_enabled }} -->
     {% include 'main/navbar.html' %}
     
-    <div class="content pt-16">
+    <div class="content pt-16 mb-24">
         {% block content %}
         {% endblock %}
     </div>
