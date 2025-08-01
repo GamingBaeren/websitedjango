@@ -23,7 +23,7 @@ staticfiles/
 *.pot
 *.pyc
 .env
-.env.*
+.env
 
 # 💻 VS Code & IDEs
 .vscode/
