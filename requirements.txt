@@ -1,0 +1,5 @@
+django
+django_unfold
+pillow
+django_extensions
+gunicorn
