@@ -2,11 +2,10 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center h-full">
     <p class="text-sm">&copy; 2024 GamingBaeren.de. All rights reserved.</p>
     <nav class="mt-4 md:mt-0 space-x-4 text-sm">
-      <a href="{% url 'impressum' %}" class="hover:text-white transition-colors">Impressum</a>
-      <a href="{
-      <a href="{% url 'contact' %}" class="hover:text-white transition-colors">Kontakt</a>
+      <a href="{% url 'impressum' %}" style="color: inherit;" class="transition-colors hover:text-[var(--light-footer-text)] dark:hover:text-[var(--dark-footer-text)]">Impressum</a>
+      <a href="{% url 'contact' %}" style="color: inherit;" class="transition-colors hover:text-[var(--light-footer-text)] dark:hover:text-[var(--dark-footer-text)]">Kontakt</a>
     </nav>
-    <button id="darkModeToggle" aria-label="Toggle Dark Mode" class="ml-4 mt-4 md:mt-0 text-gray-300 hover:text-white focus:outline-none flex items-center space-x-2 px-3 py-1 border border-gray-600 rounded">
+    <button id="darkModeToggle" aria-label="Toggle Dark Mode" class="ml-4 mt-4 md:mt-0 text-[var(--light-footer-text)] dark:text-[var(--dark-footer-text)] hover:text-[var(--light-footer-text)] dark:hover:text-[var(--dark-footer-text)] focus:outline-none flex items-center space-x-2 px-3 py-1 border border-gray-600 rounded">
       <svg id="darkModeIcon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" role="img" focusable="false">
         <path id="darkModeIconPath" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m8.485-8.485l-.707.707M4.222 4.222l-.707.707m16.97 8.485h-1M3 12H2m16.485 4.95l-.707-.707M4.222 19.778l-.707-.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
       </svg>

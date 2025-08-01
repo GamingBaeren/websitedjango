@@ -2,10 +2,10 @@
 
 {% block content %}
   <div class="max-w-4xl mx-auto py-8 px-4 sm:px-8 text-center">
-    <h1 class="text-3xl font-bold mb-6 text-white">Social Media Links</h1>
+    <h1 class="text-3xl font-bold mb-6" style="color: {% if dark_mode_enabled %}{{ dark_socialmedia_heading_text_color }}{% else %}{{ light_socialmedia_heading_text_color }}{% endif %}">Social Media Links</h1>
     <div class="flex flex-col space-y-4 items-center justify-center">
       {% for link in links %}
-        <a href="{{ link.url }}" target="_blank" class="inline-flex items-center justify-center p-4 w-64 bg-gray-800 rounded-lg shadow text-white hover:bg-blue-600 transition">
+        <a href="{{ link.url }}" target="_blank" class="inline-flex items-center justify-center p-4 w-64 rounded-lg shadow transition" style="background-color: {% if dark_mode_enabled %}{{ dark_socialmedia_bg_color }}{% else %}{{ light_socialmedia_bg_color }}{% endif %}; color: {% if dark_mode_enabled %}{{ dark_socialmedia_links_text_color }}{% else %}{{ light_socialmedia_links_text_color }}{% endif %};" >
           {% if link.icon_class %}
             <i class="{{ link.icon_class }} mr-2"></i>
           {% endif %}

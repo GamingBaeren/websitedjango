@@ -3,9 +3,9 @@
 {% block title %}Bild hochladen{% endblock %}
 
 {% block content %}
-<div class="max-w-3xl mx-auto px-4 py-12 text-gray-300">
+<div class="max-w-3xl mx-auto px-4 py-12" style="color: var(--imageupload-text);">
   <h1 class="text-3xl font-bold mb-6">Bild hochladen</h1>
-  <form method="post" enctype="multipart/form-data" class="bg-gray-800 rounded-lg p-6 shadow-md space-y-4">
+  <form method="post" enctype="multipart/form-data" class="rounded-lg p-6 shadow-md space-y-4" style="background-color: var(--imageupload-container-bg);">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit" class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded">

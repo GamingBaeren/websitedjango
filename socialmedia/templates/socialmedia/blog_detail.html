@@ -1,12 +1,12 @@
 {% extends "main/base.html" %}
 
 {% block content %}
-  <div class="max-w-4xl mx-auto py-8">
-    <article class="bg-gray-800 rounded-lg shadow p-6 text-white">
+  <div class="max-w-4xl mx-auto py-8 text-center" style="background-color: var(--socialmedia-bg); color: var(--socialmedia-text);">
+    <article class="rounded-lg shadow p-6">
       <h1 class="text-3xl font-bold mb-4">{{ post.title }}</h1>
-      <p class="text-gray-400 mb-6">{{ post.published_date|date:"F j, Y" }}</p>
+      <p class="mb-6">{{ post.published_date|date:"F j, Y" }}</p>
       {% if post.image %}
-        <img src="{{ post.image.url }}" alt="{{ post.title }}" class="mb-6 rounded">
+        <img src="{{ post.image.url }}" alt="{{ post.title }}" class="mb-6 rounded mx-auto">
       {% endif %}
       <div class="prose max-w-none">
         {{ post.content|linebreaks }}

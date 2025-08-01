@@ -3,20 +3,20 @@
 {% block title %}Bild Details{% endblock %}
 
 {% block content %}
-<div class="max-w-3xl mx-auto px-4 py-12 text-gray-300">
+<div class="max-w-3xl mx-auto px-4 py-12" style="color: var(--imageupload-text);">
   <h1 class="text-3xl font-bold mb-6">Bild Details</h1>
   <p><strong>Name:</strong> {{ image.name }}</p>
   <p><strong>Dateigröße:</strong> {{ file_size }} Bytes</p>
   <p><strong>Uploader:</strong> {{ image.uploader.username }}</p>
 <p><strong>Direkte Bild-URL:</strong> 
   <a href="{{ direct_url }}" class="text-purple-400 hover:text-purple-600 underline" target="_blank">{{ direct_url }}</a>
-  <button onclick="copyToClipboard('{{ request.scheme }}://{{ request.get_host }}{{ direct_url }}')" class="ml-2 px-2 py-1 bg-gray-700 rounded text-sm">Copy</button>
+  <button onclick="copyToClipboard('{{ request.scheme }}://{{ request.get_host }}{{ direct_url }}')" class="ml-2 px-2 py-1 rounded text-sm" style="background-color: var(--imageupload-container-bg);">Copy</button>
 </p>
 <p><strong>View-URL:</strong> 
   <a href="{{ view_url }}" class="text-purple-400 hover:text-purple-600 underline" target="_blank">{{ view_url }}</a>
-  <button onclick="copyToClipboard('{{ view_url }}')" class="ml-2 px-2 py-1 bg-gray-700 rounded text-sm">Copy</button>
+  <button onclick="copyToClipboard('{{ view_url }}')" class="ml-2 px-2 py-1 rounded text-sm" style="background-color: var(--imageupload-container-bg);">Copy</button>
 </p>
-  <div class="mt-6">
+  <div class="mt-6" style="background-color: var(--imageupload-container-bg);">
     <img src="{{ direct_url }}" alt="{{ image.name }}" class="max-w-full rounded-md shadow-md" />
   </div>
 

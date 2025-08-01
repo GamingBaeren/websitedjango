@@ -1,0 +1,64 @@
+# 🐍 Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+develop-eggs/
+.eggs/
+*.manifest
+*.spec
+
+# 🚀 Django
+*.log
+db.sqlite3
+db.sqlite3-journal
+media/
+staticfiles/
+*.pot
+*.pyc
+.env
+.env.*
+
+# 💻 VS Code & IDEs
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# 📦 Paketverwaltung
+venv/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# 🧪 Tests
+.coverage
+htmlcov/
+.tox/
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.cache
+.pytest_cache/
+
+# 🔒 Secret Keys & Credentials
+*.env
+*.pem
+
+# 📊 Migrations (optional)
+**/migrations/*.py
+!**/migrations/__init__.py
+
+# 📸 Thumbnails or generated content
+*_thumb.*
+
+# 🐘 PostgreSQL dump files
+*.sql
+
+# 🧾 Other Django-generated artifacts
+local_settings.py

@@ -8,8 +8,44 @@
     <link href="{% static 'main/footer-sticky.css' %}" rel="stylesheet">
     <link href="{% static 'main/dark-bg-fix.css' %}" rel="stylesheet">
     <link href="{% static 'main/custom-text-colors.css' %}" rel="stylesheet">
+    <style>
+      :root {
+        --light-bg: {{ light_bg }};
+        --light-text: {{ light_text }};
+        --dark-bg: {{ dark_bg }};
+        --dark-text: {{ dark_text }};
+        --light-navbar-bg: {{ light_navbar_bg }};
+        --light-navbar-text: {{ light_navbar_text }};
+        --dark-navbar-bg: {{ dark_navbar_bg }};
+        --dark-navbar-text: {{ dark_navbar_text }};
+        --light-footer-bg: {{ light_footer_bg }};
+        --light-footer-text: {{ light_footer_text }};
+        --dark-footer-bg: {{ dark_footer_bg }};
+        --dark-footer-text: {{ dark_footer_text }};
+      }
+      html.light {
+        background-color: var(--light-bg);
+        color: var(--light-text);
+        --intermediate-heading-color: {{ light_intermediate_heading }};
+        --container-bg-color: {{ light_container_bg }};
+        --imageupload-container-bg: {{ light_imageupload_container_bg }};
+        --imageupload-text: {{ light_imageupload_text }};
+        --socialmedia-bg: {{ light_socialmedia_bg }};
+        --socialmedia-text: {{ light_socialmedia_text }};
+      }
+      html.dark {
+        background-color: var(--dark-bg);
+        color: var(--dark-text);
+        --intermediate-heading-color: {{ dark_intermediate_heading }};
+        --container-bg-color: {{ dark_container_bg }};
+        --imageupload-container-bg: {{ dark_imageupload_container_bg }};
+        --imageupload-text: {{ dark_imageupload_text }};
+        --socialmedia-bg: {{ dark_socialmedia_bg }};
+        --socialmedia-text: {{ dark_socialmedia_text }};
+      }
+    </style>
 </head>
-<body class="{% if dark_mode_enabled %}dark{% else %}light{% endif %}" style="background-color: {% if dark_mode_enabled %}{{ dark_bg }}{% else %}{{ light_bg }}{% endif %}; color: {% if dark_mode_enabled %}{{ dark_text }}{% else %}{{ light_text }}{% endif %};">
+<body class="{% if dark_mode_enabled %}dark{% else %}light{% endif %}">
     <!-- Dark mode enabled: {{ dark_mode_enabled }} -->
     {% include 'main/navbar.html' %}
     
