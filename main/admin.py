@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django import forms
+from unfold.admin import ModelAdmin
 from .models import SiteSettings
 
 class SiteSettingsAdminForm(forms.ModelForm):
@@ -40,7 +41,7 @@ class SiteSettingsAdminForm(forms.ModelForm):
             'dark_socialmedia_heading_text_color': forms.TextInput(attrs={'type': 'color'}),
         }
 
-class SiteSettingsAdmin(admin.ModelAdmin):
+class SiteSettingsAdmin(ModelAdmin):
     form = SiteSettingsAdminForm
 
     def has_add_permission(self, request):
