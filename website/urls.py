@@ -28,6 +28,7 @@ urlpatterns = [
     path('imageupload/', include('imageupload.urls', namespace='imageupload')),
     path('rust-rp', include('rust.urls')),
     path('socialmedia/', include('socialmedia.urls')),
+    path('shop/', include('shop.urls', namespace='shop')),
 ]
 
 if settings.DEBUG:

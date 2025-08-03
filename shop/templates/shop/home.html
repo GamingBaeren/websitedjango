@@ -1,0 +1,169 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Donation Shop{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="flex justify-between items-center mb-8">
+        <h1 class="text-3xl font-bold">Support Us with a Donation</h1>
+        {% if user.is_authenticated %}
+            <a href="{% url 'shop:donation_history' %}" class="bg-gray-600 hover:bg-gray-700 font-bold py-2 px-4 rounded"
+                style="color: {% if dark_mode_enabled %}{{ dark_text }}{% else %}{{ light_text }}{% endif %};">
+                View Donation History
+            </a>
+        {% endif %}
+    </div>
+    
+    {% if messages %}
+        {% for message in messages %}
+            <div class="bg-{{ message.tags }}-100 border border-{{ message.tags }}-400 text-{{ message.tags }}-700 px-4 py-3 rounded mb-6">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {% for product in products %}
+        <div class="rounded-lg shadow-md overflow-hidden border product-card mb-6" data-product-id="{{ product.id }}" data-price="{{ product.price }}" data-currency="{{ product.currency }}"
+            style="background-color: {% if dark_mode_enabled %}{{ dark_container_bg }}{% else %}{{ light_container_bg }}{% endif %}; border-color: {% if dark_mode_enabled %}{{ dark_container_bg }}{% else %}{{ light_container_bg }}{% endif %};">
+            <div class="p-6">
+                <h2 class="text-xl font-semibold mb-2"
+                    style="color: {% if dark_mode_enabled %}{{ dark_text }}{% else %}{{ light_text }}{% endif %};">
+                    {{ product.name }}
+                </h2>
+                <p class="mb-4"
+                    style="color: {% if dark_mode_enabled %}{{ dark_text }}{% else %}{{ light_text }}{% endif %}; opacity: 0.8;">
+                    {{ product.description }}
+                </p>
+                <div class="flex justify-between items-center space-x-4">
+                    <span class="text-2xl font-bold"
+                        style="color: {% if dark_mode_enabled %}{{ dark_text }}{% else %}{{ light_text }}{% endif %};">
+                        {{ product.price }} {{ product.currency }}
+                    </span>
+                    {% if product.allow_custom_amount %}
+                        <form method="post" action="{% url 'shop:create_donation_session' %}" class="custom-donation-form">
+                            {% csrf_token %}
+                            <input type="hidden" name="product_id" value="{{ product.id }}">
+                            <div class="flex items-center space-x-2">
+                                <input type="number" name="custom_amount" step="0.01" min="1" placeholder="Custom amount"
+                                    class="border rounded px-2 py-1 w-24"
+                                    style="background-color: {% if dark_mode_enabled %}{{ dark_container_bg }}{% else %}{{ light_container_bg }}{% endif %}; border-color: {% if dark_mode_enabled %}{{ dark_text }}{% else %}{{ light_text }}{% endif %}; color: {% if dark_mode_enabled %}{{ dark_text }}{% else %}{{ light_text }}{% endif %};">
+                                <button type="submit" class="font-bold py-1 px-2 rounded text-sm"
+                                    style="background-color: #22c55e; color: {% if dark_mode_enabled %}{{ dark_text }}{% else %}{{ light_text }}{% endif %};">
+                                    Stripe
+                                </button>
+                            </div>
+                        </form>
+                    {% else %}
+                        <form method="post" action="{% url 'shop:create_donation_session' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="product_id" value="{{ product.id }}">
+                            <button type="submit" class="font-bold py-2 px-4 rounded"
+                                style="background-color: #22c55e; color: {% if dark_mode_enabled %}{{ dark_text }}{% else %}{{ light_text }}{% endif %};">
+                                Stripe
+                            </button>
+                        </form>
+                    {% endif %}
+                    {% if product.allow_custom_amount %}
+                        <div class="paypal-button-container" data-product-id="{{ product.id }}">
+                            <p class="text-sm mt-2"
+                                style="color: {% if dark_mode_enabled %}{{ dark_text }}{% else %}{{ light_text }}{% endif %}; opacity: 0.7;">
+                                PayPal payment option
+                            </p>
+                        </div>
+                    {% else %}
+                        <div class="paypal-button-container">
+                            <p class="text-sm mt-2"
+                                style="color: {% if dark_mode_enabled %}{{ dark_text }}{% else %}{{ light_text }}{% endif %}; opacity: 0.7;">
+                                PayPal payment option
+                            </p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-span-full text-center py-12">
+            <p class="text-xl text-gray-600">No donation options available at the moment.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Stripe integration -->
+<script src="https://js.stripe.com/v3/"></script>
+
+<!-- PayPal SDK -->
+<script src="https://www.paypal.com/sdk/js?client-id={{ PAYPAL_CLIENT_ID }}&currency=EUR"></script>
+
+<script>
+    // Initialize Stripe with the publishable key
+    var stripe = Stripe('{{ STRIPE_PUBLISHABLE_KEY }}');
+    
+    // Handle form submissions for Stripe Checkout
+    document.querySelectorAll('form[method="post"]').forEach(function(form) {
+        form.addEventListener('submit', function(e) {
+            // Let Django handle the form submission as is
+            // The view will redirect to Stripe Checkout
+        });
+    });
+
+    // Render PayPal buttons for each product
+    document.addEventListener('DOMContentLoaded', function() {
+        const products = document.querySelectorAll('.product-card');
+        products.forEach(function(product) {
+            const productId = product.dataset.productId;
+            const price = product.dataset.price;
+            const currency = product.dataset.currency;
+            const container = product.querySelector('.paypal-button-container');
+            
+            // Check if this is a custom amount product
+            const isCustomAmount = product.querySelector('.custom-donation-form') !== null;
+            
+            if (typeof paypal !== 'undefined') {
+                try {
+                    const paypalConfig = {
+                        createOrder: function(data, actions) {
+                            // For custom amount products, we need to get the value from the input
+                            let amountValue = price;
+                            if (isCustomAmount) {
+                                const customAmountInput = product.querySelector('input[name="custom_amount"]');
+                                if (customAmountInput && customAmountInput.value) {
+                                    amountValue = customAmountInput.value;
+                                }
+                            }
+                            
+                            return actions.order.create({
+                                purchase_units: [{
+                                    amount: {
+                                        value: amountValue
+                                    }
+                                }]
+                            });
+                        },
+                        onApprove: function(data, actions) {
+                            return actions.order.capture().then(function(details) {
+                                // Redirect to PayPal success view with order ID and product ID
+                                window.location.href = `/shop/paypal-success/?orderID=${data.orderID}&productID=${productId}`;
+                            });
+                        },
+                        onError: function(err) {
+                            console.error('PayPal Checkout onError', err);
+                        }
+                    };
+                    
+                    paypal.Buttons(paypalConfig).render(container);
+                } catch (error) {
+                    console.error('Error rendering PayPal button:', error);
+                }
+            } else {
+                console.warn('PayPal SDK not loaded');
+                // Fallback: show a message or hide the container
+                if (container) {
+                    container.innerHTML = '<p class="text-red-500">PayPal payment temporarily unavailable</p>';
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}

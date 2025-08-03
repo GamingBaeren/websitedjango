@@ -1,0 +1,77 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Donation Success{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="max-w-md mx-auto bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
+        <div class="p-6 text-center">
+            <div class="text-green-500 mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+            </div>
+            <h1 class="text-2xl font-bold text-gray-800 mb-2">Thank You for Your Donation!</h1>
+            <p class="text-gray-600 mb-6">Your generous support means a lot to us.</p>
+            
+            <div class="bg-gray-50 rounded-lg p-4 mb-6">
+                <h2 class="text-lg font-semibold mb-2">Donation Details</h2>
+                <ul class="text-left space-y-2">
+                    <li><span class="font-medium">Product:</span> {{ donation.product.name }}</li>
+                    <li><span class="font-medium">Amount:</span> {{ donation.amount }} {{ donation.currency }}</li>
+                    <li><span class="font-medium">Date:</span> {{ donation.created_at|date:"F d, Y" }}</li>
+                    <li><span class="font-medium">Status:</span> 
+                        <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">
+                            {{ donation.status|title }}
+                        </span>
+                    </li>
+                    {% if donation.stripe_payment_intent_id %}
+                    <li>
+                        <span class="font-medium">Transaction ID:</span> 
+                        <div class="flex items-center">
+                            <span class="mr-2">{{ donation.stripe_payment_intent_id|truncatechars:20 }}</span>
+                            <button class="copy-button text-indigo-600 hover:text-indigo-800" 
+                                    data-transaction-id="{{ donation.stripe_payment_intent_id }}"
+                                    title="Copy Transaction ID">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                                </svg>
+                            </button>
+                        </div>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+            
+            <a href="{% url 'shop:home' %}" class="inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded">
+                Make Another Donation
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add event listeners to all copy buttons
+        document.querySelectorAll('.copy-button').forEach(function(button) {
+            button.addEventListener('click', function() {
+                const transactionId = this.getAttribute('data-transaction-id');
+                
+                // Copy to clipboard
+                navigator.clipboard.writeText(transactionId).then(function() {
+                    // Show feedback to user
+                    const originalHTML = button.innerHTML;
+                    button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>';
+                    
+                    // Reset button after 2 seconds
+                    setTimeout(function() {
+                        button.innerHTML = originalHTML;
+                    }, 2000);
+                }).catch(function(err) {
+                    console.error('Failed to copy: ', err);
+                });
+            });
+        });
+    });
+</script>
+{% endblock %}

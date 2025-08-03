@@ -1,4 +1,5 @@
 from .models import SiteSettings
+from django.conf import settings
 
 def dark_mode(request):
     dark_mode_enabled = request.COOKIES.get('dark_mode', 'false') == 'true'

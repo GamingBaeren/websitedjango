@@ -4,3 +4,4 @@ pillow
 django_extensions
 gunicorn
 python-dotenv
+stripe

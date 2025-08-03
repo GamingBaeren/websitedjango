@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'rust',
     'socialmedia',
     'imageupload',
+    'shop',  # Donation shop app
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -77,6 +78,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'main.context_processors.dark_mode',
+                'shop.context_processors.shop_context',
             ],
         },
     },
@@ -153,6 +155,13 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'no-reply@gamingbaeren.de'  # Replace with your email
 EMAIL_HOST_PASSWORD = '(L%`o@mHD!w`R3e?**'  # Replace with your email password
 DEFAULT_FROM_EMAIL = 'no-reply@gamingbaeren.de'
+
+# Stripe settings
+STRIPE_PUBLISHABLE_KEY = os.getenv('STRIPE_PUBLISHABLE_KEY', '')
+STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY', '')
+STRIPE_WEBHOOK_SECRET = os.getenv('STRIPE_WEBHOOK_SECRET', '')
+
+PAYPAL_CLIENT_ID = os.getenv('PAYPAL_CLIENT_ID', '')
 
 import os
 MEDIA_URL = '/media/'
