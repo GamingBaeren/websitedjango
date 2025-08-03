@@ -79,7 +79,7 @@ def create_donation_session(request):
                 text_color = '#333333'
                 accent_color = '#cfd7df'
             
-            # Create Stripe checkout session with styling
+            # Create Stripe checkout session
             checkout_session = stripe.checkout.Session.create(
                 payment_method_types=['card', 'sepa_debit', 'ideal', 'bancontact', 'giropay', 'sofort'],
                 line_items=[
@@ -100,36 +100,7 @@ def create_donation_session(request):
                 cancel_url=request.build_absolute_uri('/shop/'),
                 metadata={
                     'donation_id': str(donation_log.id)
-                },
-                ui_mode='embedded',
-                appearance={
-                    'theme': 'stripe',
-                    'variables': {
-                        'colorPrimary': primary_color,
-                        'colorBackground': background_color,
-                        'colorText': text_color,
-                        'colorDanger': '#df1b41',
-                        'fontFamily': 'Ideal Sans, system-ui, sans-serif',
-                        'spacingUnit': '2px',
-                        'borderRadius': '4px',
-                    },
-                    'rules': {
-                        '.Input': {
-                            'borderColor': accent_color,
-                            'borderRadius': '6px',
-                        },
-                        '.Input--invalid': {
-                            'borderColor': '#df1b41',
-                        },
-                        '.Tab': {
-                            'borderColor': accent_color,
-                            'borderRadius': '6px',
-                        },
-                        '.Tab--selected': {
-                            'borderColor': primary_color,
-                        },
-                    },
-                },
+                }
             )
             
             return redirect(checkout_session.url, code=303)
