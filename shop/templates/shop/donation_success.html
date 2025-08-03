@@ -4,24 +4,40 @@
 
 {% block content %}
 <div class="container mx-auto px-4 py-8">
-    <div class="max-w-md mx-auto bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
-        <div class="p-6 text-center">
-            <div class="text-green-500 mb-4">
+    <div class="max-w-md mx-auto rounded-lg shadow-md overflow-hidden border"
+        style="background-color: {% if dark_mode_enabled %}{{ dark_container_bg }}{% else %}{{ light_container_bg }}{% endif %};
+               border-color: {% if dark_mode_enabled %}{{ dark_container_bg }}{% else %}{{ light_container_bg }}{% endif %};">
+        <div class="p-6 text-center"
+            style="color: {% if dark_mode_enabled %}{{ dark_text }}{% else %}{{ light_text }}{% endif %};">
+            <div class="mb-4"
+                style="color: #22c55e;">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                 </svg>
             </div>
-            <h1 class="text-2xl font-bold text-gray-800 mb-2">Thank You for Your Donation!</h1>
-            <p class="text-gray-600 mb-6">Your generous support means a lot to us.</p>
+            <h1 class="text-2xl font-bold mb-2"
+                style="color: {% if dark_mode_enabled %}{{ dark_text }}{% else %}{{ light_text }}{% endif %};">
+                Thank You for Your Donation!
+            </h1>
+            <p class="mb-6"
+                style="color: {% if dark_mode_enabled %}{{ dark_text }}{% else %}{{ light_text }}{% endif %}; opacity: 0.8;">
+                Your generous support means a lot to us.
+            </p>
             
-            <div class="bg-gray-50 rounded-lg p-4 mb-6">
-                <h2 class="text-lg font-semibold mb-2">Donation Details</h2>
-                <ul class="text-left space-y-2">
+            <div class="rounded-lg p-4 mb-6"
+                style="background-color: {% if dark_mode_enabled %}{{ dark_container_bg }}{% else %}{{ light_container_bg }}{% endif %}; color: {% if dark_mode_enabled %}{{ dark_text }}{% else %}{{ light_text }}{% endif %};">
+                <h2 class="text-lg font-semibold mb-2"
+                    style="color: {% if dark_mode_enabled %}{{ dark_text }}{% else %}{{ light_text }}{% endif %};">
+                    Donation Details
+                </h2>
+                <ul class="text-left space-y-2"
+                    style="color: {% if dark_mode_enabled %}{{ dark_text }}{% else %}{{ light_text }}{% endif %};">
                     <li><span class="font-medium">Product:</span> {{ donation.product.name }}</li>
                     <li><span class="font-medium">Amount:</span> {{ donation.amount }} {{ donation.currency }}</li>
                     <li><span class="font-medium">Date:</span> {{ donation.created_at|date:"F d, Y" }}</li>
                     <li><span class="font-medium">Status:</span> 
-                        <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">
+                        <span class="px-2 py-1 rounded-full text-xs"
+                            style="background-color: #d1fae5; color: #065f46;">
                             {{ donation.status|title }}
                         </span>
                     </li>
@@ -43,7 +59,8 @@
                 </ul>
             </div>
             
-            <a href="{% url 'shop:home' %}" class="inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded">
+            <a href="{% url 'shop:home' %}" class="inline-block font-bold py-2 px-4 rounded"
+                style="background-color: #22c55e; color: {% if dark_mode_enabled %}{{ dark_text }}{% else %}{{ light_text }}{% endif %};">
                 Make Another Donation
             </a>
         </div>

@@ -58,7 +58,28 @@ def create_donation_session(request):
                 status='pending'
             )
             
-            # Create Stripe checkout session
+            # Get site settings for checkout styling
+            try:
+                from main.models import SiteSettings
+                site_settings = SiteSettings.objects.first()
+                if site_settings:
+                    # Use light mode colors by default for Stripe checkout
+                    primary_color = site_settings.light_intermediate_heading_color
+                    background_color = site_settings.light_container_bg_color
+                    text_color = site_settings.light_text_color
+                    accent_color = site_settings.light_bg_color
+                else:
+                    primary_color = '#22c55e'  # Default green
+                    background_color = '#ffffff'  # Default white
+                    text_color = '#333333'
+                    accent_color = '#cfd7df'
+            except:
+                primary_color = '#22c55e'  # Default green
+                background_color = '#ffffff'  # Default white
+                text_color = '#333333'
+                accent_color = '#cfd7df'
+            
+            # Create Stripe checkout session with styling
             checkout_session = stripe.checkout.Session.create(
                 payment_method_types=['card', 'sepa_debit', 'ideal', 'bancontact', 'giropay', 'sofort'],
                 line_items=[
@@ -79,7 +100,36 @@ def create_donation_session(request):
                 cancel_url=request.build_absolute_uri('/shop/'),
                 metadata={
                     'donation_id': str(donation_log.id)
-                }
+                },
+                ui_mode='embedded',
+                appearance={
+                    'theme': 'stripe',
+                    'variables': {
+                        'colorPrimary': primary_color,
+                        'colorBackground': background_color,
+                        'colorText': text_color,
+                        'colorDanger': '#df1b41',
+                        'fontFamily': 'Ideal Sans, system-ui, sans-serif',
+                        'spacingUnit': '2px',
+                        'borderRadius': '4px',
+                    },
+                    'rules': {
+                        '.Input': {
+                            'borderColor': accent_color,
+                            'borderRadius': '6px',
+                        },
+                        '.Input--invalid': {
+                            'borderColor': '#df1b41',
+                        },
+                        '.Tab': {
+                            'borderColor': accent_color,
+                            'borderRadius': '6px',
+                        },
+                        '.Tab--selected': {
+                            'borderColor': primary_color,
+                        },
+                    },
+                },
             )
             
             return redirect(checkout_session.url, code=303)
