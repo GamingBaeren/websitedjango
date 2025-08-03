@@ -81,7 +81,7 @@ def create_donation_session(request):
             
             # Create Stripe checkout session
             checkout_session = stripe.checkout.Session.create(
-                payment_method_types=['card', 'sepa_debit', 'ideal', 'bancontact', 'giropay', 'sofort'],
+                payment_method_types=['card', 'ideal', 'bancontact', 'sofort'], # 'sepa_debit' 'giropay',
                 line_items=[
                     {
                         'price_data': {
